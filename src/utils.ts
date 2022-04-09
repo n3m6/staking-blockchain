@@ -1,4 +1,4 @@
-import { createHash} from "crypto";
+import { createHash } from 'crypto';
 
 export function hash(data: string): string {
   const hash = createHash('sha256');

@@ -1,12 +1,12 @@
-import {createSign, createVerify, generateKeyPairSync, KeyPairKeyObjectResult, Sign} from "crypto";
-import { hash} from './utils';
-import Transaction from "./transaction";
+import { createSign, createVerify, generateKeyPairSync, KeyPairKeyObjectResult, Sign } from 'crypto';
+import { hash } from './utils';
+import Transaction from './transaction';
 
 export default class Wallet {
   keyPair: KeyPairKeyObjectResult;
 
   constructor() {
-    this.keyPair = generateKeyPairSync ('rsa', {
+    this.keyPair = generateKeyPairSync('rsa', {
       modulusLength: 2048,
     });
   }
@@ -20,7 +20,7 @@ export default class Wallet {
 
   sign(data: string): string {
     const dataHash = hash(data);
-    const sign = createSign('SHA256')
+    const sign = createSign('SHA256');
     sign.write(dataHash);
     sign.end();
     return sign.sign(this.keyPair.privateKey, 'hex');
@@ -31,7 +31,7 @@ export default class Wallet {
     const verify = createVerify('SHA256');
     verify.write(dataHash);
     verify.end();
-    return verify.verify(publicKeyString, signature, 'hex')
+    return verify.verify(publicKeyString, signature, 'hex');
   }
 
   public createTransaction(receiverPublicKey: string, amount: number, type: string) {

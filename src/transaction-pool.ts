@@ -1,4 +1,4 @@
-import Transaction from "./transaction";
+import Transaction from './transaction';
 
 export default class TransactionPool {
   transactions: Transaction[];
@@ -6,6 +6,7 @@ export default class TransactionPool {
   constructor() {
     this.transactions = [];
   }
+
 
   addTransaction(transaction: Transaction): void {
     this.transactions.push(transaction);

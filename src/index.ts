@@ -1,5 +1,5 @@
-import Wallet from "./wallet";
-import TransactionPool from "./transaction-pool";
+import Wallet from './wallet';
+import TransactionPool from './transaction-pool';
 
 async function main() {
   const sender = 'sender';
@@ -23,4 +23,5 @@ async function main() {
 
 }
 
-main().then(() => {})
+main().then(() => {
+});

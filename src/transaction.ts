@@ -15,7 +15,7 @@ export default class Transaction {
     this.amount = amount;
     this.type = type;
     this.id = this.createHexId();
-    this.timestamp = Math.floor(Date.now()/1000);
+    this.timestamp = Math.floor(Date.now() / 1000);
     this.signature = '';
   }
 
@@ -38,7 +38,7 @@ export default class Transaction {
       id: this.id,
       timestamp: this.timestamp,
       signature: this.signature,
-    }
+    };
     return JSON.stringify(data);
   }
 
@@ -50,7 +50,7 @@ export default class Transaction {
       type: this.type,
       id: this.id,
       timestamp: this.timestamp,
-    }
+    };
     return JSON.stringify(data);
   }
 
