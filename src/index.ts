@@ -1,6 +1,5 @@
-import Transaction from './transaction';
 import Wallet from "./wallet";
-import {transcode} from "buffer";
+import TransactionPool from "./transaction-pool";
 
 async function main() {
   const sender = 'sender';
@@ -14,9 +13,13 @@ async function main() {
 
   console.log(transaction.toString());
 
-  const signatureStatus = Wallet.signatureIsValid(transaction.payload(), transaction.signature, wallet.publicKeyString());
 
-  console.log(signatureStatus);
+  const pool = new TransactionPool();
+
+  if (!pool.transactionExists(transaction)) pool.addTransaction(transaction);
+  if (!pool.transactionExists(transaction)) pool.addTransaction(transaction);
+
+  console.log(pool.transactions.length);
 
 }
 

@@ -53,4 +53,8 @@ export default class Transaction {
     }
     return JSON.stringify(data);
   }
+
+  equals(transaction: Transaction) {
+    return this.id === transaction.id;
+  }
 }
