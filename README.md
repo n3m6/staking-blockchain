@@ -1,3 +1,3 @@
-# A Proof-of-Stake Blockchain written in typescript
+# A Proof-of-Stake Blockchain written in Typescript
 
 Work in progress.
