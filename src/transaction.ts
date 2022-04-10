@@ -1,15 +1,20 @@
 import { v4 as uuidv4 } from 'uuid';
 
+export enum TransactionType {
+  EXCHANGE = 'EXCHANGE',
+  TRANSFER = 'TRANSFER',
+}
+
 export default class Transaction {
   senderPublicKey: string;
   receiverPublicKey: string;
   amount: number;
-  type: string;
+  type: TransactionType;
   id: string;
   timestamp: number;
   signature: string;
 
-  constructor(senderPublicKey: string, receiverPublicKey, amount: number, type: string) {
+  constructor(senderPublicKey: string, receiverPublicKey, amount: number, type: TransactionType) {
     this.senderPublicKey = senderPublicKey;
     this.receiverPublicKey = receiverPublicKey;
     this.amount = amount;

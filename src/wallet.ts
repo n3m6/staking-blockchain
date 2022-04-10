@@ -1,6 +1,8 @@
-import { createSign, createVerify, generateKeyPairSync, KeyPairKeyObjectResult, Sign } from 'crypto';
+import { createSign, createVerify, generateKeyPairSync, KeyPairKeyObjectResult } from 'crypto';
 import { hash } from './utils';
-import Transaction from './transaction';
+import Transaction, { TransactionType } from './transaction';
+import TransactionPool from './transaction-pool';
+import Block from './block';
 
 export default class Wallet {
   keyPair: KeyPairKeyObjectResult;
@@ -12,10 +14,12 @@ export default class Wallet {
   }
 
   publicKeyString(): string {
-    return this.keyPair.publicKey.export({
-      type: 'pkcs1',
-      format: 'pem',
-    }).toString();
+    return this.keyPair.publicKey
+      .export({
+        type: 'pkcs1',
+        format: 'pem',
+      })
+      .toString();
   }
 
   sign(data: string): string {
@@ -34,13 +38,18 @@ export default class Wallet {
     return verify.verify(publicKeyString, signature, 'hex');
   }
 
-  public createTransaction(receiverPublicKey: string, amount: number, type: string) {
+  public createTransaction(receiverPublicKey: string, amount: number, type: TransactionType) {
     const transaction = new Transaction(this.publicKeyString(), receiverPublicKey, amount, type);
-
     const signature = this.sign(transaction.payload());
     transaction.sign(signature);
 
     return transaction;
   }
 
+  public createBlock(transactions: TransactionPool, lastHash: string, blockCount: number) {
+    const block = new Block(transactions, lastHash, this.publicKeyString(), blockCount);
+    const signature = this.sign(block.payload());
+    block.sign(signature);
+    return block;
+  }
 }
