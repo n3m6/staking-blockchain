@@ -5,6 +5,16 @@ export enum TransactionType {
   TRANSFER = 'TRANSFER',
 }
 
+export interface TransactionCreate {
+  senderPublicKey: string;
+  receiverPublicKey: string;
+  amount: number;
+  type: TransactionType;
+  id: string;
+  timestamp: number;
+  signature: string;
+}
+
 export default class Transaction {
   senderPublicKey: string;
   receiverPublicKey: string;
@@ -22,6 +32,20 @@ export default class Transaction {
     this.id = this.createHexId();
     this.timestamp = Math.floor(Date.now() / 1000);
     this.signature = '';
+  }
+
+  static create(payload: TransactionCreate) {
+    const transaction = new Transaction(
+      payload.senderPublicKey,
+      payload.receiverPublicKey,
+      payload.amount,
+      payload.type,
+    );
+    transaction.id = payload.id;
+    transaction.signature = payload.signature;
+    transaction.timestamp = payload.timestamp;
+
+    return transaction;
   }
 
   createHexId() {

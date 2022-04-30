@@ -20,12 +20,16 @@
     "test:ci": "jest --coverage --ci --reporters=default --reporters=jest-junit --coverageReporters=text --coverageReporters=cobertura"
   },
   "dependencies": {
+    "@types/peerjs": "^1.1.0",
     "dotenv": "^10.0.0",
+    "fastify": "^3.29.0",
+    "pino": "^7.11.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/jest": "27.0.2",
     "@types/node": "^16.0.0",
+    "@types/simple-peer": "^9.11.4",
     "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
