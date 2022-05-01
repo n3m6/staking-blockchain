@@ -30,17 +30,19 @@ export default class NodeApi {
   }
 
   async blockchainRoute(request: FastifyRequest<any>, reply: FastifyReply<any>) {
-    return reply.send(this.node.blockchain.toString());
+    return this.node.blockchain.toString();
   }
 
   async transactionPoolRoute(req: FastifyRequest<any>, reply: FastifyReply<any>) {
-    return reply.send(this.node.pool.toString());
+    console.log(this.node.pool.toString());
+    return this.node.pool.toString();
   }
 
   async transactionRoute(req: FastifyRequest<any>, reply: FastifyReply<any>) {
     const values = req.body;
+    console.log(values);
     if (!!values.transaction) {
-      this.node.handleTransaction(values.transaction);
+      this.node.handleTransaction(JSON.parse(values.transaction));
       return reply.send(201);
     }
 

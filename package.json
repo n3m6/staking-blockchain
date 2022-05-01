@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@types/peerjs": "^1.1.0",
+    "axios": "^0.27.2",
     "dotenv": "^10.0.0",
     "fastify": "^3.29.0",
     "pino": "^7.11.0",

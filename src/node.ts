@@ -3,12 +3,16 @@ import Wallet from './wallet';
 import Blockchain from './blockchain';
 import Socket from './socket';
 import NodeApi from './node-api';
-import Transaction from './transaction';
+import Transaction, { TransactionType } from './transaction';
 
-interface TransactionPayload {
-  data: string;
-  signature: string;
-  senderPublicKey: string;
+export interface TransactionPayload {
+  senderPublicKey: string,
+  receiverPublicKey: string,
+  amount: number,
+  type: string,
+  id: string,
+  timestamp: number,
+  signature: TransactionType,
 }
 
 export default class Node {
@@ -33,10 +37,14 @@ export default class Node {
   handleTransaction(transaction: TransactionPayload) {
     const signature = transaction.signature;
     const signerPublicKey = transaction.senderPublicKey;
-    const signatureValid = Wallet.signatureIsValid(transaction.data, signature, signerPublicKey);
-    const tx = Transaction.create(JSON.parse(transaction.data));
+    const tx = Transaction.create(transaction);
+    const signatureValid = Wallet.signatureIsValid(tx.payload(), signature, signerPublicKey);
     const transactionExists = this.pool.transactionExists(tx);
-    if (transactionExists && signatureValid) {
+
+    console.log(`Transaction Exists: ${transactionExists}`);
+    console.log(`Signature Valid?: ${signatureValid}`);
+
+    if (!transactionExists && signatureValid) {
       this.pool.addTransaction(tx);
     }
   }

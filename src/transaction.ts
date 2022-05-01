@@ -1,18 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
+import { TransactionPayload } from './node';
 
 export enum TransactionType {
   EXCHANGE = 'EXCHANGE',
   TRANSFER = 'TRANSFER',
-}
-
-export interface TransactionCreate {
-  senderPublicKey: string;
-  receiverPublicKey: string;
-  amount: number;
-  type: TransactionType;
-  id: string;
-  timestamp: number;
-  signature: string;
 }
 
 export default class Transaction {
@@ -34,12 +25,12 @@ export default class Transaction {
     this.signature = '';
   }
 
-  static create(payload: TransactionCreate) {
+  static create(payload: TransactionPayload) {
     const transaction = new Transaction(
       payload.senderPublicKey,
       payload.receiverPublicKey,
       payload.amount,
-      payload.type,
+      payload.type as TransactionType,
     );
     transaction.id = payload.id;
     transaction.signature = payload.signature;
